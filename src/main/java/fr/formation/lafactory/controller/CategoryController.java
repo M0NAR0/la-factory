@@ -17,28 +17,29 @@ public class CategoryController {
 	@Autowired
 	private ICategoryService categoryService;
 	
-	@GetMapping("/")
+	// display list of categories
+	@GetMapping("/admin/categories")
 	public String viewHomePage(Model model) {
 		model.addAttribute("listCategories", categoryService.getAllCategories());
-		return "index";
+		return "admin/categories/list";
 	}
 	
-	@GetMapping("/showNewCategoryForm")
+	@GetMapping("/admin/categories/showNewCategoryForm")
 	public String showNewCategoryForm(Model model) {
 		// create model attribute to bind form data
 		Category category = new Category();
 		model.addAttribute("category", category);
-		return "new_category";
+		return "admin/categories/new_category";
 	}
 	
-	@PostMapping("/saveCategory")
+	@PostMapping("/admin/categories/saveCategory")
 	public String saveCategory(@ModelAttribute("category") Category category) {
 		// save category to database
 		categoryService.saveCategory(category);
-		return "redirect:/";
+		return "redirect:/admin/categories";
 	}
 	
-	@GetMapping("/showFormForUpdate/{id}")
+	@GetMapping("/admin/categories/showFormForUpdate/{id}")
 	public String showFormForUpdate(@PathVariable(value = "id") long id, Model model) {
 		
 		// get category from the service
@@ -46,14 +47,14 @@ public class CategoryController {
 		
 		// set category as a model attribute to pre-populate the form
 		model.addAttribute("category", category);
-		return "update_category";
+		return "admin/categories/update_category";
 	}
 	
-	@GetMapping("/deleteCategory/{id}")
+	@GetMapping("/admin/categories/deleteCategory/{id}")
 	public String deleteCategory(@PathVariable(value = "id") long id) {
 		
 		// call delete category method
 		this.categoryService.deleteCategoryById(id);
-		return "redirect:/";
+		return "redirect:/admin/categories";
 	}
 }

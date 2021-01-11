@@ -11,17 +11,21 @@
     <div class="container">
         <h1>Category Management System</h1>
         <hr>
-        <h2>Save Category</h2>
+        <h2>Update Category</h2>
 
-        <form action="#" th:action="@{/saveCategory}" th:object="${category}" method="POST">
+        <form action="#" th:action="@{/admin/categories/saveCategory}" th:object="${category}" method="POST">
+        
+        	<!-- Add hidden form field to handle update -->
+            <input type="hidden" th:field="*{id}" />
+            
             <input type="text" th:field="*{label}" placeholder="Category Name" class="form-control mb-4 col-4">
 
-            <button type="submit" class="btn btn-info col-2"> Save Category</button>
+            <button type="submit" class="btn btn-info col-2"> Update Category</button>
         </form>
 
         <hr>
 
-        <a th:href="@{/}"> Back to Category List</a>
+        <a th:href="@{/admin/categories}"> Back to Category List</a>
     </div>
 </body>
 
