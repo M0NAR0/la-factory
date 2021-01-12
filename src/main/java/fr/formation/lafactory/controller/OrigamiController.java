@@ -1,5 +1,9 @@
 package fr.formation.lafactory.controller;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,8 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import fr.formation.lafactory.model.Origami;
+import fr.formation.lafactory.model.Step;
 import fr.formation.lafactory.service.ICategoryService;
 import fr.formation.lafactory.service.IOrigamiService;
+import fr.formation.lafactory.service.IStepService;
 
 @Controller
 public class OrigamiController {
@@ -20,6 +26,23 @@ public class OrigamiController {
 	
 	@Autowired
 	private ICategoryService categoryService;
+	
+	@Autowired
+	private IStepService stepService;
+	
+	/* USER */
+	@GetMapping("/origami/{id}")
+	public String viewOrigamiDetails(@PathVariable(value = "id") long id, Model model) {
+		Origami origami = origamiService.getOrigamiById(id);
+		Comparator<Step> compareByOrder = (Step s1, Step s2) -> Integer.compare(s1.getOrder(), s2.getOrder());
+		List<Step> steps = stepService.getStepsByOrigami(origami);
+		Collections.sort(steps, compareByOrder);
+		model.addAttribute("origami", origami);
+		model.addAttribute("listSteps", steps);
+		return "origami_details";
+	}
+	
+	/* ADMIN */
 	
 	// display list of origamis
 	@GetMapping("/admin/origamis")

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import fr.formation.lafactory.dao.IStepRepository;
+import fr.formation.lafactory.model.Origami;
 import fr.formation.lafactory.model.Step;
 
 @Service
@@ -42,5 +43,10 @@ public class StepService implements IStepService {
 	@Override
 	public void deleteStepById(long id) {
 		this.stepRepository.deleteById(id);
+	}
+	
+	@Override
+	public List<Step> getStepsByOrigami(Origami origami) {
+		return stepRepository.findByOrigami(origami);
 	}
 }

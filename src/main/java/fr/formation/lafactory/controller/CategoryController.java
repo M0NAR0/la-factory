@@ -10,12 +10,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import fr.formation.lafactory.model.Category;
 import fr.formation.lafactory.service.ICategoryService;
+import fr.formation.lafactory.service.IOrigamiService;
 
 @Controller
 public class CategoryController {
 	
 	@Autowired
 	private ICategoryService categoryService;
+	
+	@Autowired
+	private IOrigamiService origamiService;
+	
+	/* USER */
+	
+	@GetMapping("/category?id={id}")
+	public String showOrigamisForCategory(@PathVariable(value = "id") long id, Model model) {
+		model.addAttribute("listCategories", categoryService.getAllCategories());
+		model.addAttribute("listOrigamis", origamiService.getOrigamisByCategory(categoryService.getCategoryById(id)));
+		return "index";
+	}
+	
+	/* ADMIN */
 	
 	// display list of categories
 	@GetMapping("/admin/categories")

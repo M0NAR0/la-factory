@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import fr.formation.lafactory.dao.IOrigamiRepository;
+import fr.formation.lafactory.model.Category;
 import fr.formation.lafactory.model.Origami;
 
 @Service
@@ -42,5 +43,10 @@ public class OrigamiService implements IOrigamiService {
 	@Override
 	public void deleteOrigamiById(long id) {
 		this.origamiRepository.deleteById(id);
+	}
+	
+	@Override
+	public List<Origami> getOrigamisByCategory(Category category) {
+		return origamiRepository.findByCategory(category);
 	}
 }

@@ -49,6 +49,9 @@ public class Origami {
 	@JoinColumn(name = "ORIGAMI_CATEGORY_ID")
 	private Category category;
 	
+	@OneToMany(mappedBy = "origami")
+	private List<Comment> comments;
+	
 	/**/
 
 	public long getId() {
@@ -129,5 +132,13 @@ public class Origami {
 
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
 	}
 }
